@@ -1,28 +1,28 @@
-var userService=require('../services/userService');
+var userService = require('../services/userService');
 
-exports.signUp=async(req,res)=>{
+exports.signUp = async (req, res) => {
     console.log('user signup');
-    var userData=await userService.signup(req.body);
+    var userData = await userService.signup(req.body);
 
-    if(userData.success){
-        res.status(200).json({ success: true, data:userData.data});
+    if (userData.success) {
+        res.status(200).json({ success: true, data: userData.data });
     }
-    else{
-        res.status(400).json({success:false,error:userData.error})
+    else {
+        res.status(400).json({ success: false, error: userData.error })
     }
-    
+
 }
 
-exports.login=async(req,res)=>{
-   var isVaildUser=await userService.login(req.params);
+exports.login = async (req, res) => {
+    var isVaildUser = await userService.login(req.params);
     console.log(isVaildUser);
-    
-   if(isVaildUser.success){
-    res.status(200).json({ success: true, data:isVaildUser.data});
-}
-else{
-    res.status(400).json({success:false,error:isVaildUser.error})
-}
+
+    if (isVaildUser.success) {
+        res.status(200).json({ success: true, data: isVaildUser.data });
+    }
+    else {
+        res.status(400).json({ success: false, error: isVaildUser.error })
+    }
 
 
 }

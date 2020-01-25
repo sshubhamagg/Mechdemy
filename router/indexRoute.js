@@ -1,12 +1,13 @@
-var express=require('express');
-var router=express.Router();
+var express = require('express');
+var router = express.Router();
 
 
-let userController=require('../controllers/userController')
+let userController = require('../controllers/userController')
+let blockController=require('../controllers/blockController')
 
 router.route('/login/username/:userName/password/:password').get(userController.login);
 router.route('/signup').post(userController.signUp);
-
-
+router.route('/blockchain').post(blockController.addBlock);
+router.route('/blockChain/username/:userName').get(blockController.getBlocks);
 
 module.exports = router;
