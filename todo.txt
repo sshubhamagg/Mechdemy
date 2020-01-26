@@ -1,6 +1,3 @@
-
-fix issue with dburl form .env file
-
 user authentication and authorization
 
 return data after block is added to chain?? reqiured or not??
