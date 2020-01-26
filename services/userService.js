@@ -1,7 +1,7 @@
 var user = require('../models/userModel');
 var index = require('../utils/index');
 var bcrypt = require('bcrypt');
-
+var _=require('lodash');
 
 module.exports.signup = async (data) => {
     console.log('saving signup details');
@@ -25,10 +25,7 @@ module.exports.signup = async (data) => {
 };
 
 
-module.exports.login = async (data) => {
-
-    //console.log('============',user);
-    
+module.exports.login = async (data) => {    
     return new Promise(async (resolve, reject) => {
         console.log('data', data);
         user.findOne({ userName: data.userName }, (error, response) => {
@@ -37,7 +34,7 @@ module.exports.login = async (data) => {
                 reject(error);
             }
             else {
-                if (response == null) {
+                if (_.isNull(response)) {
                     console.log('user not found');
                     return ({ success: false, error: 'user not found' })
                 }

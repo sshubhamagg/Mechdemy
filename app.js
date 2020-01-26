@@ -7,7 +7,7 @@ var app=express();
 
 
 const routes = require('./router/indexRoute');
-const port=3000;
+const port=4200;
 const dbUrl="mongodb://127.0.0.1:27017/mechademy";
 
 mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true });
