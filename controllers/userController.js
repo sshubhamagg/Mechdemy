@@ -1,3 +1,5 @@
+
+var http_status_code=require('http-status-codes')
 var userService = require('../services/userService');
 
 exports.signUp = async (req, res) => {
@@ -5,10 +7,10 @@ exports.signUp = async (req, res) => {
     var userData = await userService.signup(req.body);
 
     if (userData.success) {
-        res.status(200).json({ success: true, data: userData.data });
+        res.status(http_status_code.OK).json({ success: true, data: userData.data });
     }
     else {
-        res.status(400).json({ success: false, error: userData.error })
+        res.status(http_status_code.BAD_REQUEST).json({ success: false, error: userData.error })
     }
 
 }
@@ -18,10 +20,10 @@ exports.login = async (req, res) => {
     console.log(isVaildUser);
 
     if (isVaildUser.success) {
-        res.status(200).json({ success: true, data: isVaildUser.data });
+        res.status(http_status_code.OK).json({ success: true, data: isVaildUser.data });
     }
     else {
-        res.status(400).json({ success: false, error: isVaildUser.error })
+        res.status(http_status_code.BAD_REQUEST).json({ success: false, error: isVaildUser.error })
     }
 
 
