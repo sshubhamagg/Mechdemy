@@ -7,8 +7,8 @@ var app = express();
 require('dotenv').config();
 
 const routes = require('./router/indexRoute');
-const port = process.env.port;
-const dbUrl = process.env.dbUrl;
+const port = process.env.PORT;
+const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true });
 
