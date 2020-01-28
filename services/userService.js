@@ -42,7 +42,7 @@ module.exports.login = async (data) => {
                 else {
                     bcrypt.compare(data.password, response.password, function (err, result) {
                         if (result == true) {
-                            resolve({ success: true, data: "user verified" })
+                            resolve({ success: true, data: response })
                         } else {
 
                             return reject({ success: false, error: "username and password do not match" });
