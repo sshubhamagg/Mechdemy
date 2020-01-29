@@ -4,7 +4,7 @@ var userService = require('../services/userService');
 var jwt=require('jsonwebtoken')
 
 exports.signUp = async (req, res) => {
-    console.log('user signup');
+   // console.log('user signup');
     var userData = await userService.signup(req.body);
 
     if (userData.success) {
@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
     var isValidUser = await userService.login(req.params);
     
     if (isValidUser.success) {
-        const token = jwt.sign({ data: isValidUser.data }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_TOKEN_EXPIRATION_TIME });
+        const token = jwt.sign({ data: isValidUser.data }, process.env.JWT_SECRET, { expiresIn:3600 });
 
         res.status(http_status_code.OK).json({ success: true, data: isValidUser.data,token:token });
     }

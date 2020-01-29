@@ -5,26 +5,11 @@ const chainModel = require('../models/chainModel')
 
 
 module.exports.addToChain = async (block) => {
+   
     return new Promise(async (resolve, reject) => {
         var userBlocks = await this.getChain(block.userName);
-
-        if (_.isNull(userBlocks.data)) {
-            var genesis = await utils.createGenisis(block);
-            var chain = await utils.createChain(block.userName, genesis);
-            var newChain = new chainModel(chain);
-            newChain.save((error, response) => {
-                if (error) {
-                    reject(error)
-                }
-                else {
-                    resolve({ success: true, data: response })
-                }
-            })
-        }
-        else {
-
             var lastBlock = await utils.getLastBlock(userBlocks.data, block);
-            console.log(lastBlock);
+           // console.log(lastBlock);
             chainModel.update({ userName: block.userName }, { $push: { chain: lastBlock } }, (error, response) => {
                 if (error) {
                     reject(error)
@@ -34,7 +19,7 @@ module.exports.addToChain = async (block) => {
                 }
             })
 
-        }
+        
     }).catch((error) => {
         return ({ success: false, error: error })
     })
@@ -53,5 +38,23 @@ module.exports.getChain = async (userName) => {
         })
     }).catch((error) => {
         return ({ success: false, error: error })
+    })
+}
+
+
+module.exports.createGenesisBlock= async(data)=>{
+    return new Promise(async(resolve,reject)=>{
+        var userChain=await utils.createGenisis(data);
+        var chain=new chainModel(userChain)
+        chain.save(userChain,(error,response)=>{
+            if(error){
+                reject(error);
+            }
+            else{
+                resolve({success:true,data:response});
+            }
+        })
+    }).catch((error)=>{
+        return({success:false,error:error});
     })
 }

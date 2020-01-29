@@ -2,21 +2,36 @@ var userModel = require('../models/userModel');
 var index = require('../utils/index');
 var bcrypt = require('bcrypt');
 var _ = require('lodash');
+var chainService=require('../services/chainService')
+
 
 module.exports.signup = async (data) => {
-
     var user = await this.findUser(data.userName);
     if (_.isNull(user.data)) {
         return new Promise(async (resolve, reject) => {
             let userObject = new userModel(data);
             var pass = await index.hashPassword(data.password);
             userObject.password = pass;
-            userObject.save((error, response) => {
+            userObject.save(async(error, response) => {
                 if (error) {
+                  
+                    
                     reject(error);
                 }
                 else {
-                    resolve({ success: true, data: response });
+                   
+                    
+                    var userChain = await chainService.createGenesisBlock(response);
+                   
+                    
+                    if (userChain.success) {
+                        resolve({ success: true, data: response });
+                    }
+                    else {
+                    
+                    
+                        reject({ success: false, error: userChain.error });
+                    }
                 }
             })
         }).catch((error) => {

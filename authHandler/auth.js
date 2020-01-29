@@ -6,16 +6,23 @@ const app = express();
 exports.auth = async (req, res,next) => {
     const token = req.headers.token;
     let isValid = false;
+   // console.log(token);
+    
     jwt.verify(token, process.env.JWT_SECRET, (error, res) => {
         if (res) {
+            
+            
             isValid = true;
         }
+     //   console.log(res);
+        
+
     });
     if (!isValid) {
-        return res.status(401).json({ success: false, error: { code: 401, message: 'UNAUTHORISED ACCESS' } });
+        return {success:false,error:'UNAUTHORISED ACCESS'}
     }
     else    {
-        return res.status(200);
+        return {success:true};
     }
     next();
 };

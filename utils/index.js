@@ -26,45 +26,46 @@ module.exports.getHash=async(block)=>{
   return SHA256(block.index + block.previousHash + block.timestamp + block.data + block.nonce).toString();
 }
 
-module.exports.createGenisis=async(block)=>{
+module.exports.createGenisis=async(user)=>{
+
+  
   var date=Date.now();
-  var data={
+  var genesisBlock={
     index: 0,
     timestamp:date,
     previousHash: 0,
-    data: block.data,
-    nonce:200
+    nonce: 200,
+    data: 'Genesis Block'
+  
   }
 
-data.hash=await this.getHash(data);
-return data;
+genesisBlock.hash=await this.getHash(genesisBlock);
+var userChain={
+  userName:user.userName,
+  chain:[genesisBlock]
+};
+return userChain;
 }
 
-module.exports.createChain=async(userName,block)=>{
-  var data={
-    userName:userName,
-    chain:[block]
-  }
-  return data;
-}
+
 
 module.exports.getLastBlock=async(userBlocks,currentBlock)=>{
   var block=JSON.stringify(userBlocks)
   var block=JSON.parse(block);
   var length=block.chain.length;
+
+  
   var lastBlock=block.chain[length-1];
 
   var date=Date.now();
   var data={
-    index: lastBlock.index+1,
+    index:parseInt(lastBlock.index) +1,
     timestamp:date,
     previousHash: lastBlock.hash,
     data: currentBlock.data,
-    nonce: lastBlock.nonce+1
+    nonce:parseInt(lastBlock.nonce) +1
   }
 
 data.hash=await this.getHash(data);
-return data;
-
-  
+return data;  
 }
