@@ -1,9 +1,6 @@
 var mongoose=require('mongoose');
 
 var chainSchema=mongoose.Schema({
-
-
-
     userName:{
         type:String,
         required:true

@@ -1,7 +1,8 @@
 
 var http_status_code=require('http-status-codes')
 var userService = require('../services/userService');
-var jwt=require('jsonwebtoken')
+var jwt=require('jsonwebtoken');
+const constants=require('../utils/messageConstants')
 
 exports.signUp = async (req, res) => {
    // console.log('user signup');
@@ -20,7 +21,7 @@ exports.login = async (req, res) => {
     var isValidUser = await userService.login(req.params);
     
     if (isValidUser.success) {
-        const token = jwt.sign({ data: isValidUser.data }, process.env.JWT_SECRET, { expiresIn:3600 });
+        const token = jwt.sign({ data: isValidUser.data }, constants.JWT_SECRET, { expiresIn:3600 });
 
         res.status(http_status_code.OK).json({ success: true, data: isValidUser.data,token:token });
     }

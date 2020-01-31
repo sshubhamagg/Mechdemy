@@ -2,13 +2,13 @@ var express = require('express');
 var mongoose = require('mongoose');
 var cors = require('cors');
 var bodyParser = require('body-parser')
-
+var constants=require('./utils/messageConstants')
 var app = express();
 require('dotenv').config();
 
 const routes = require('./router/indexRoute');
-const port = process.env.PORT;
-const dbUrl = process.env.DB_URL;
+const port = process.env.PORT||3000;
+const dbUrl = constants.DB_URL;
 
 mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true });
 
@@ -16,13 +16,10 @@ mongoose.connection.on('connected', () => {
     console.log('mongodb connected');
 
 })
-
 mongoose.connection.on('error', (error) => {
     console.log('mongodb connection failed', error);
 
 })
-
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

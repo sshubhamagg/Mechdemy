@@ -1,4 +1,4 @@
-var blockService = require('../services/blockService')
+
 const _ = require('lodash');
 const utils = require('../utils/index')
 const chainModel = require('../models/chainModel')
