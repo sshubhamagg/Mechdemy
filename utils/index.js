@@ -27,8 +27,6 @@ module.exports.getHash=async(block)=>{
 }
 
 module.exports.createGenisis=async(user)=>{
-
-  
   var date=Date.now();
   var genesisBlock={
     index: 0,
@@ -47,16 +45,11 @@ var userChain={
 return userChain;
 }
 
-
-
 module.exports.getLastBlock=async(userBlocks,currentBlock)=>{
   var block=JSON.stringify(userBlocks)
   var block=JSON.parse(block);
   var length=block.chain.length;
-
-  
   var lastBlock=block.chain[length-1];
-
   var date=Date.now();
   var data={
     index:parseInt(lastBlock.index) +1,
@@ -65,7 +58,12 @@ module.exports.getLastBlock=async(userBlocks,currentBlock)=>{
     data: currentBlock.data,
     nonce:parseInt(lastBlock.nonce) +1
   }
-
 data.hash=await this.getHash(data);
 return data;  
 }
+
+module.exports.resolve = (error) => {
+  for (const key in error.errors) {
+    return (error.errors[key].message);
+  }
+};

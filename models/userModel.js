@@ -4,42 +4,20 @@ const validator = require('validator');
 var userSchema=mongoose.Schema({
     firstName:{
         type:String,
-        required:true
+        required:[true,'First Name is required']
     },
     lastName:{
         type:String,
-        required:true
+        required:[true,'Last Name is required']
     },
-    // email:{
-    //     type:String,
-    //     required:true,
-    //     validate: [
-    //         {
-    //             validator: value => validator.isEmail(value),
-    //             message: '{VALUE} is not a valid emailId!',
-    //         },
-    //     ],
-    // },
-    // phone:{
-    //     type:String,
-    //     required:true,
-    //     validate: [
-    //         {
-    //             validator: value => utils.isValidNumber(value),
-    //             message: '{VALUE} is not a valid Mobile number!'
-    //         }
-    //     ]
-    // },
     userName:{
         type:String,
-        required:true
+        required:[true,'Username is required']
     },
-
     password:{
         type:String,
-        required:true
+        required:[true,'Password is required']
     }
-
 })
 
 module.exports= mongoose.model('user',userSchema);

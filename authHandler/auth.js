@@ -6,17 +6,10 @@ const constants=require('../utils/messageConstants')
 exports.auth = async (req, res,next) => {
     const token = req.headers.token;
     let isValid = false;
-   // console.log(token);
-    
     jwt.verify(token, constants.JWT_SECRET, (error, res) => {
         if (res) {
-            
-            
             isValid = true;
         }
-     //   console.log(res);
-        
-
     });
     if (!isValid) {
         return {success:false,error:'UNAUTHORISED ACCESS'}

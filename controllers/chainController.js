@@ -1,4 +1,3 @@
-
 var http_status_code=require('http-status-codes')
 var chainService=require('../services/chainService')
 var authenticate=require('../authHandler/auth').auth
@@ -6,11 +5,10 @@ var authenticate=require('../authHandler/auth').auth
 module.exports.addToChain=async(req,res)=>{
     const isValid=await authenticate(req);
     if(!isValid.success)
-         return res.status(401).json(isValid.error)
-    
-    var block=await chainService.addToChain(req.body);
+         return res.status(401).json(isValid.error);  
   
-    if (block.success) {
+      var block=await chainService.addToChain(req.body);
+      if (block.success) {
         res.status(http_status_code.OK).json({ success: true, data: block.data});
     }
     else {

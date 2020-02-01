@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var authenticate=require('../authHandler/auth').auth
 
 let userController = require('../controllers/userController')
 let chainController=require('../controllers/chainController')

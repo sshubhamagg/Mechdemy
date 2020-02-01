@@ -2,8 +2,8 @@ var userModel = require('../models/userModel');
 var index = require('../utils/index');
 var bcrypt = require('bcrypt');
 var _ = require('lodash');
-var chainService=require('../services/chainService')
-
+var chainService=require('../services/chainService');
+var utils=require('../utils/index')
 
 module.exports.signup = async (data) => {
     var user = await this.findUser(data.userName);
@@ -14,23 +14,16 @@ module.exports.signup = async (data) => {
             userObject.password = pass;
             userObject.save(async(error, response) => {
                 if (error) {
-                  
-                    
-                    reject(error);
+                    error=await utils.resolve(error)
+                   reject(error);
                 }
-                else {
-                   
-                    
+                else {                   
                     var userChain = await chainService.createGenesisBlock(response);
-                   
-                    
                     if (userChain.success) {
                         resolve({ success: true, data: response });
                     }
                     else {
-                    
-                    
-                        reject({ success: false, error: userChain.error });
+                    reject({ success: false, error: userChain.error });
                     }
                 }
             })
@@ -43,16 +36,16 @@ module.exports.signup = async (data) => {
     }
 };
 
-
 module.exports.login = async (data) => {
     return new Promise(async (resolve, reject) => {
-        userModel.findOne({ userName: data.userName }, (error, response) => {
+        userModel.findOne({ userName: data.userName }, async    (error, response) => {
             if (error) {
+                error=await utils.resolve(error);
                 reject(error);
             }
             else {
                 if (_.isNull(response)) {
-                    return reject({ success: false, error: 'user not found' })
+                    return reject({ success: false, error: 'User not found' })
                 }
                 else {
                     bcrypt.compare(data.password, response.password, function (err, result) {
@@ -60,7 +53,7 @@ module.exports.login = async (data) => {
                             resolve({ success: true, data: response })
                         } else {
 
-                            return reject({ success: false, error: "username and password do not match" });
+                            return reject({ success: false, error: "Username and Password do not match" });
                         }
                     });
                 }
@@ -71,8 +64,6 @@ module.exports.login = async (data) => {
         return { success: false, error: error }
     })
 }
-
-
 module.exports.findUser = async (userName) => {
     return new Promise(async (resolve, reject) => {
         userModel.findOne({ userName: userName }, (error, response) => {

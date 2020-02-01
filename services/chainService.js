@@ -1,15 +1,12 @@
-
 const _ = require('lodash');
 const utils = require('../utils/index')
 const chainModel = require('../models/chainModel')
 
 
 module.exports.addToChain = async (block) => {
-   
     return new Promise(async (resolve, reject) => {
         var userBlocks = await this.getChain(block.userName);
             var lastBlock = await utils.getLastBlock(userBlocks.data, block);
-           // console.log(lastBlock);
             chainModel.update({ userName: block.userName }, { $push: { chain: lastBlock } }, (error, response) => {
                 if (error) {
                     reject(error)
