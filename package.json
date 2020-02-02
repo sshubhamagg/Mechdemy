@@ -4,7 +4,7 @@
   "description": "mechademy challange",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,8 @@
     "mongoose": "^5.8.9",
     "nodemon": "^2.0.2",
     "validator": "^12.2.0"
-  }
-
+  },
+"engines":{
+  "node":"10.x"
+}
 }

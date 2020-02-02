@@ -34,4 +34,4 @@ var chainSchema=mongoose.Schema({
 }]
 })
 
-module.exports= mongoose.model('chain',chainSchema);
+module.exports= mongoose.model('shubhamChain',chainSchema);
